@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx-janus
+    depends_on:
+      - janus
+    image: nginx:alpine
+    networks:
+      - janus
+    ports:
+      - 80:80
+    restart: always
+    volumes:
+      - ./conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - demos:/usr/share/nginx/html:ro
+
+  janus:
+    container_name: janus
+    image: janus
+    networks:
+      - janus
+    ports:
+      - "8088:8088"
+    restart: always
+    volumes:
+      - demos:/opt/janus/share/janus/demos
+
+networks:
+  default:
+    external:
+      name: bridge
+  janus:
+
+volumes:
+  demos:
