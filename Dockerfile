@@ -25,7 +25,6 @@ RUN apk --no-cache add --virtual=build-dependencies --upgrade \
 		jpeg-dev \
 		libpng-dev \
 		libtool \
-		# libusrsctp \
 		make \
 		nodejs \
 		nodejs-npm \
@@ -45,13 +44,11 @@ RUN apk --no-cache add --virtual=build-dependencies --upgrade \
 		python3-dev \
 		sudo \
 		supervisor \
-		# sofia-sip \
 		rust \
 		zlib-dev
 
 RUN git clone https://github.com/sctplab/usrsctp \
 		&& cd usrsctp && ./bootstrap \
-		# && ./configure CFLAGS="-Wno-error=cpp" --prefix=/usr && make && sudo make install && rm -fr /usrsctp \
 		&& ./configure CFLAGS="-Wno-error=cpp" --prefix=/usr/lib64 && make && sudo make install && rm -fr /usrsctp \
 		&& cd ..
 
@@ -74,7 +71,6 @@ RUN git clone --depth 1 https://github.com/meetecho/janus-gateway.git \
 		--enable-javascript-es-module \
 		--enable-javascript-umd-module \
 		--enable-javascript-iife-module \
-		# --enable-plugin-duktape \
 		&& make \
 		&& make install \
 		&& make configs
@@ -96,7 +92,6 @@ libmicrohttpd \
 libnice \
 libogg \
 libsrtp \
-# libusrsctp \
 libwebsockets \
 nodejs \
 nodejs-npm \
@@ -105,8 +100,5 @@ opus
 
 COPY --from=build /opt/janus /opt/janus
 VOLUME [ "/opt/janus/share/janus/demos" ]
-# EXPOSE 8880
-# EXPOSE 8088/tcp 8188/tcp
-# EXPOSE 8188/udp 10000-10200/udp
 
 ENTRYPOINT ["/opt/janus/bin/janus"]
