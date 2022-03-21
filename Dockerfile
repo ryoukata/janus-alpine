@@ -96,7 +96,6 @@ libwebsockets \
 nodejs \
 nodejs-npm \
 opus 
-# sofia-sip
 
 COPY --from=build /opt/janus /opt/janus
 VOLUME [ "/opt/janus/share/janus/demos" ]
